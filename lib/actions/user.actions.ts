@@ -53,8 +53,8 @@ export const createAccount = async ({
     const { databases } = await createAdminClient();
 
     const client = new Client()
-      .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
-      .setProject(appwriteConfig.projectId); // Your project ID
+      .setEndpoint("https://cloud.appwrite.io/v1")
+      .setProject(appwriteConfig.projectId);
 
     const avatars = new Avatars(client);
 

@@ -23,9 +23,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <Image
             src="/assets/images/files.png"
             alt="Files"
-            width={342}
-            height={342}
-            className="transition-all hover:rotate-2 hover:scale-105"
+            width={242}
+            height={242}
+            className="transition-all hover:rotate-2 hover:scale-105 self-center"
           />
         </div>
       </section>

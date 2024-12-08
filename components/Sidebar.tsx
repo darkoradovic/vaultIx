@@ -5,8 +5,6 @@ import Image from "next/image";
 import { navItems } from "@/constants";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Avatars, Client } from "node-appwrite";
-import { appwriteConfig } from "@/lib/appwrite/config";
 
 interface Props {
   fullName: string;
