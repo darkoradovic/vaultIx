@@ -33,7 +33,7 @@ import { FileDetails, ShareInput } from "@/components/ActionsModalContent";
 
 interface ActionsDropdownProps {
   file: Models.Document;
-  email: string;
+  email?: string;
 }
 
 const ActionDropdown: FC<ActionsDropdownProps> = ({ file, email }) => {
@@ -121,7 +121,7 @@ const ActionDropdown: FC<ActionsDropdownProps> = ({ file, email }) => {
               file={file}
               onInputChange={setEmails}
               onRemove={handleRemoveUser}
-              currentUserEmail={email}
+              currentUserEmail={email!}
               setSharedEmails={setSharedEmails}
             />
           )}

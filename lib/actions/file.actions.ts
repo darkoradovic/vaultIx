@@ -25,6 +25,7 @@ export const uploadFile = async ({
     // -----------this needs to be fixed----------
     //const inputFile = InputFile.fromBuffer(file, file.name);
 
+    console.log(file);
     const bucketFile = await storage.createFile(
       appwriteConfig.bucketId,
       ID.unique(),
@@ -64,11 +65,11 @@ export const uploadFile = async ({
 };
 
 const createQueries = (
-  currentUser: Models.Document
-  /*  types: string[],
+  currentUser: Models.Document,
+  types: string[],
   searchText: string,
   sort: string,
-  limit?: number */
+  limit?: number
 ) => {
   const queries = [
     Query.or([
@@ -77,7 +78,7 @@ const createQueries = (
     ]),
   ];
 
-  /*  if (types.length > 0) queries.push(Query.equal("type", types));
+  if (types.length > 0) queries.push(Query.equal("type", types));
   if (searchText) queries.push(Query.contains("name", searchText));
   if (limit) queries.push(Query.limit(limit));
 
@@ -87,7 +88,7 @@ const createQueries = (
     queries.push(
       orderBy === "asc" ? Query.orderAsc(sortBy) : Query.orderDesc(sortBy)
     );
-  } */
+  }
   return queries;
 };
 
@@ -104,7 +105,7 @@ export const getFiles = async ({
 
     if (!currentUser) throw new Error("User not found");
 
-    const queries = createQueries(currentUser);
+    const queries = createQueries(currentUser, types, searchText, sort, limit);
 
     const files = await databases.listDocuments(
       appwriteConfig.databaseId,
