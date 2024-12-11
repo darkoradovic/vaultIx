@@ -4,9 +4,14 @@ import Thumbnail from "@/components/Thumbnail";
 import { convertFileSize } from "@/lib/utils";
 import FormattedDateTime from "@/components/FormattedDateTime";
 import ActionDropdown from "@/components/ActionDropdown";
+import { FC } from "react";
 
-const Card = ({ file }: { file: Models.Document }) => {
-  console.log(file);
+interface CardProps {
+  file: Models.Document;
+  email: string;
+}
+
+const Card: FC<CardProps> = ({ file, email }) => {
   return (
     <Link href={file.url} target="_blank" className="file-card">
       <div className="flex justify-between">
@@ -19,7 +24,7 @@ const Card = ({ file }: { file: Models.Document }) => {
         />
 
         <div className="flex flex-col items-end justify-between">
-          <ActionDropdown file={file} />
+          <ActionDropdown file={file} email={email} />
           <p className="body-1">{convertFileSize(file.size)}</p>
         </div>
       </div>

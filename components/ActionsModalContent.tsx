@@ -2,7 +2,7 @@ import { Models } from "node-appwrite";
 import Thumbnail from "@/components/Thumbnail";
 import FormattedDateTime from "@/components/FormattedDateTime";
 import { convertFileSize, formatDateTime } from "@/lib/utils";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -47,13 +47,23 @@ interface Props {
   file: Models.Document;
   onInputChange: React.Dispatch<React.SetStateAction<string[]>>;
   onRemove: (email: string) => void;
+  currentUserEmail: string;
+  setSharedEmails: (emails: string[]) => void;
 }
 
-export const ShareInput = ({ file, onInputChange, onRemove }: Props) => {
+export const ShareInput = ({
+  file,
+  onInputChange,
+  onRemove,
+  currentUserEmail,
+  setSharedEmails,
+}: Props) => {
+  useEffect(() => {
+    setSharedEmails(file.users);
+  }, [file]);
   return (
     <>
       <ImageThumbnail file={file} />
-
       <div className="share-wrapper">
         <p className="subtitle-2 pl-1 text-light-100">
           Share file with other users
@@ -61,14 +71,18 @@ export const ShareInput = ({ file, onInputChange, onRemove }: Props) => {
         <Input
           type="email"
           placeholder="Enter email address"
-          onChange={(e) => onInputChange(e.target.value.trim().split(","))}
+          onChange={(e) => {
+            onInputChange(e.target.value.trim().split(","));
+          }}
           className="share-input-field"
         />
         <div className="pt-4">
           <div className="flex justify-between">
             <p className="subtitle-2 text-light-100">Shared with</p>
             <p className="subtitle-2 text-light-200">
-              {file.users.length} users
+              {file.users.length > 1
+                ? `${file.users.length} users`
+                : `${file.users.length} user`}
             </p>
           </div>
 
@@ -79,18 +93,20 @@ export const ShareInput = ({ file, onInputChange, onRemove }: Props) => {
                 className="flex items-center justify-between gap-2"
               >
                 <p className="subtitle-2">{email}</p>
-                <Button
-                  onClick={() => onRemove(email)}
-                  className="share-remove-user"
-                >
-                  <Image
-                    src="/assets/icons/remove.svg"
-                    alt="Remove"
-                    width={24}
-                    height={24}
-                    className="remove-icon"
-                  />
-                </Button>
+                {file.owner.email === currentUserEmail && (
+                  <Button
+                    onClick={() => onRemove(email)}
+                    className="share-remove-user"
+                  >
+                    <Image
+                      src="/assets/icons/remove.svg"
+                      alt="Remove"
+                      width={24}
+                      height={24}
+                      className="remove-icon"
+                    />
+                  </Button>
+                )}
               </li>
             ))}
           </ul>

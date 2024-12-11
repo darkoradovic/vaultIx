@@ -33,7 +33,7 @@ declare interface RenameFileProps {
 }
 declare interface UpdateFileUsersProps {
   fileId: string;
-  emails: string[];
+  combinedEmails: string[];
   path: string;
 }
 declare interface DeleteFileProps {

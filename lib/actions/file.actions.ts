@@ -148,7 +148,7 @@ export const renameFile = async ({
 
 export const updateFileUsers = async ({
   fileId,
-  emails,
+  combinedEmails,
   path,
 }: UpdateFileUsersProps) => {
   const { databases } = await createAdminClient();
@@ -159,7 +159,7 @@ export const updateFileUsers = async ({
       appwriteConfig.filesCollectionId,
       fileId,
       {
-        users: emails,
+        users: combinedEmails,
       }
     );
 

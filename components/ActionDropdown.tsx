@@ -15,7 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useState } from "react";
+import { FC, useState } from "react";
 import Image from "next/image";
 import { Models } from "node-appwrite";
 import { actionsDropdownItems } from "@/constants";
@@ -31,22 +31,37 @@ import {
 import { usePathname } from "next/navigation";
 import { FileDetails, ShareInput } from "@/components/ActionsModalContent";
 
-const ActionDropdown = ({ file }: { file: Models.Document }) => {
+interface ActionsDropdownProps {
+  file: Models.Document;
+  email: string;
+}
+
+const ActionDropdown: FC<ActionsDropdownProps> = ({ file, email }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [action, setAction] = useState<ActionType | null>(null);
   const [name, setName] = useState(file.name);
   const [isLoading, setIsLoading] = useState(false);
   const [emails, setEmails] = useState<string[]>([]);
+  const [sharedEmails, setSharedEmails] = useState<string[]>([]);
 
   const path = usePathname();
+
+  const filteredArray: string[] = [...emails, ...sharedEmails];
+  let combinedEmails = filteredArray.filter((str) => str !== "");
+
+  const hasValidEmails =
+    emails.filter((email) => email.trim() !== "").length > 0;
 
   const closeAllModals = () => {
     setIsModalOpen(false);
     setIsDropdownOpen(false);
     setAction(null);
     setName(file.name);
-    //   setEmails([]);
+    //setEmails to empty array not working  ---- need FIX
+    setEmails([]);
+    setSharedEmails([]);
+    combinedEmails = [];
   };
 
   const handleAction = async () => {
@@ -57,7 +72,7 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
     const actions = {
       rename: () =>
         renameFile({ fileId: file.$id, name, extension: file.extension, path }),
-      share: () => updateFileUsers({ fileId: file.$id, emails, path }),
+      share: () => updateFileUsers({ fileId: file.$id, combinedEmails, path }),
       delete: () =>
         deleteFile({ fileId: file.$id, bucketFileId: file.bucketFileId, path }),
     };
@@ -70,11 +85,11 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
   };
 
   const handleRemoveUser = async (email: string) => {
-    const updatedEmails = emails.filter((e) => e !== email);
+    const updatedEmails = sharedEmails.filter((e) => e !== email);
 
     const success = await updateFileUsers({
       fileId: file.$id,
-      emails: updatedEmails,
+      combinedEmails: updatedEmails,
       path,
     });
 
@@ -106,6 +121,8 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
               file={file}
               onInputChange={setEmails}
               onRemove={handleRemoveUser}
+              currentUserEmail={email}
+              setSharedEmails={setSharedEmails}
             />
           )}
           {value === "delete" && (
@@ -120,7 +137,11 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
             <Button onClick={closeAllModals} className="modal-cancel-button">
               Cancel
             </Button>
-            <Button onClick={handleAction} className="modal-submit-button">
+            <Button
+              onClick={handleAction}
+              className="modal-submit-button"
+              disabled={value === "share" && !hasValidEmails}
+            >
               <p className="capitalize">{value}</p>
               {isLoading && (
                 <Image
