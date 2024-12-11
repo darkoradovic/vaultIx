@@ -5,6 +5,7 @@ import Image from "next/image";
 import { navItems } from "@/constants";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 interface Props {
   fullName: string;
@@ -14,9 +15,14 @@ interface Props {
 
 const Sidebar = ({ fullName, avatar, email }: Props) => {
   const pathname = usePathname();
+  const [dark, setDark] = useState(false);
 
+  const darkModeHandler = () => {
+    setDark(!dark);
+    document.body.classList.toggle("dark");
+  };
   return (
-    <aside className="sidebar">
+    <aside className="sidebar dark:bg-[#202124]">
       <Link href="/">
         <Image
           src="/assets/icons/logo-full-brand.svg"
@@ -55,7 +61,7 @@ const Sidebar = ({ fullName, avatar, email }: Props) => {
                     pathname === url && "nav-icon-active"
                   )}
                 />
-                <p className="hidden lg:block">{name}</p>
+                <p className="hidden lg:block dark:text-white">{name}</p>
               </li>
             </Link>
           ))}
@@ -69,8 +75,11 @@ const Sidebar = ({ fullName, avatar, email }: Props) => {
         height={418}
         className="w-full"
       /> */}
-
-      <div className="sidebar-user-info">
+      <button onClick={() => darkModeHandler()}>
+        {dark && <p>Sun</p>}
+        {!dark && <p>Moon</p>}
+      </button>
+      <div className="sidebar-user-info bg-brand/10 text-light-100 dark:bg-[#3C4042] dark:text-white">
         <Image
           src={avatar}
           alt="Avatar"
@@ -78,7 +87,7 @@ const Sidebar = ({ fullName, avatar, email }: Props) => {
           height={44}
           className="sidebar-user-avatar"
         />
-        <div className="hidden lg:block">
+        <div className="hidden lg:block ">
           <p className="subtitle-2 capitalize">{fullName}</p>
           <p className="caption">{email}</p>
         </div>
