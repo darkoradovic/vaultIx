@@ -22,10 +22,8 @@ export const uploadFile = async ({
   const { storage, databases } = await createAdminClient();
 
   try {
-    // -----------this needs to be fixed----------
     //const inputFile = InputFile.fromBuffer(file, file.name);
 
-    console.log(file);
     const bucketFile = await storage.createFile(
       appwriteConfig.bucketId,
       ID.unique(),
@@ -59,7 +57,6 @@ export const uploadFile = async ({
     revalidatePath(path);
     return parseStringify(newFile);
   } catch (error) {
-    console.error("Error creating file:", error);
     handleError(error, "Failed to upload file");
   }
 };
@@ -89,6 +86,7 @@ const createQueries = (
       orderBy === "asc" ? Query.orderAsc(sortBy) : Query.orderDesc(sortBy)
     );
   }
+
   return queries;
 };
 
@@ -113,8 +111,7 @@ export const getFiles = async ({
       queries
     );
 
-    console.log(files);
-    console.log(queries);
+    console.log({ files });
     return parseStringify(files);
   } catch (error) {
     handleError(error, "Failed to get files");
