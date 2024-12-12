@@ -1,14 +1,18 @@
-import Header from "@/components/Header";
-import MobileNavigation from "@/components/MobileNavigation";
+import React from "react";
 import Sidebar from "@/components/Sidebar";
+import MobileNavigation from "@/components/MobileNavigation";
+import Header from "@/components/Header";
 import { getCurrentUser } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
-import React from "react";
+import { Toaster } from "@/components/ui/toaster";
+
+export const dynamic = "force-dynamic";
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) return redirect("/sign-in");
+
   return (
     <main className="flex h-screen dark:bg-[#202124]">
       <Sidebar {...currentUser} />
@@ -21,9 +25,8 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
         </div>
       </section>
 
-      {/* <Toaster /> */}
+      <Toaster />
     </main>
   );
 };
-
 export default Layout;
