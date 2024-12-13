@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
+const withPWA = require("next-pwa")({
+  dest: "public", // Output directory for service worker
+  register: true, // Automatically register service worker
+  skipWaiting: true, // Activate service worker immediately
+  scope: "/app",
+  sw: "sw.js",
+  disable: process.env.NODE_ENV === "development", // Disable in development mode
+});
+
+const nextConfig: NextConfig = withPWA({
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -28,6 +37,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-};
+});
 
 export default nextConfig;
