@@ -79,7 +79,7 @@ const Sidebar = ({ fullName, avatar, email }: Props) => {
         {dark && <p>Sun</p>}
         {!dark && <p>Moon</p>}
       </button>
-      <div className="sidebar-user-info bg-brand/10 text-light-100 dark:bg-[#3C4042] dark:text-white">
+      <div className="sidebar-user-info bg-brand/10 text-light-100 dark:bg-[#303335] dark:text-white">
         <Image
           src={avatar}
           alt="Avatar"

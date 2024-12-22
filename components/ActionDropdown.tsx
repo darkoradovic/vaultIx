@@ -103,13 +103,14 @@ const ActionDropdown: FC<ActionsDropdownProps> = ({ file, email }) => {
     const { value, label } = action;
 
     return (
-      <DialogContent className="shad-dialog button">
+      <DialogContent className="shad-dialog button [&>button]:bg-[#303335]">
         <DialogHeader className="flex flex-col gap-3">
-          <DialogTitle className="text-center text-light-100">
+          <DialogTitle className="text-center text-light-100 dark:text-white">
             {label}
           </DialogTitle>
           {value === "rename" && (
             <Input
+              className="dark:text-white"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -128,13 +129,13 @@ const ActionDropdown: FC<ActionsDropdownProps> = ({ file, email }) => {
           {value === "delete" && (
             <p className="delete-confirmation">
               Are you sure you want to delete{` `}
-              <span className="delete-file-name">{file.name}</span>?
+              <span className="delete-file-name">{file.name}</span> ?
             </p>
           )}
         </DialogHeader>
         {["rename", "delete", "share"].includes(value) && (
           <DialogFooter className="flex flex-col gap-3 md:flex-row">
-            <Button onClick={closeAllModals} className="modal-cancel-button">
+            <Button onClick={closeAllModals} className="modal-cancel-button ">
               Cancel
             </Button>
             <Button
@@ -170,7 +171,7 @@ const ActionDropdown: FC<ActionsDropdownProps> = ({ file, email }) => {
             height={34}
           />
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent className="dark:!bg-[#202124]">
           <DropdownMenuLabel className="max-w-[200px] truncate">
             {file.name}
           </DropdownMenuLabel>

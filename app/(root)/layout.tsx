@@ -20,7 +20,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
       <section className="flex h-full flex-1 flex-col">
         <MobileNavigation {...currentUser} />
         <Header userId={currentUser.$id} accountId={currentUser.accountId} />
-        <div className="main-content bg-light-400 dark:bg-[#3C4042]">
+        <div className="main-content bg-light-400 dark:bg-[#303335]">
           {children}
         </div>
       </section>

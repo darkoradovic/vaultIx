@@ -56,9 +56,9 @@ const OTPModal = ({
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      <AlertDialogContent className="shad-alert-dialog">
+      <AlertDialogContent className="shad-alert-dialog ">
         <AlertDialogHeader className="relative flex justify-center">
-          <AlertDialogTitle className="h2 text-center">
+          <AlertDialogTitle className="h2 text-center dark:text-white">
             Enter Your OTP
             <Image
               src="/assets/icons/close-dark.svg"
@@ -90,7 +90,7 @@ const OTPModal = ({
           <div className="flex w-full flex-col gap-4">
             <AlertDialogAction
               onClick={handleSubmit}
-              className="shad-submit-btn h-12"
+              className="shad-submit-btn h-12 dark:text-white"
               type="button"
             >
               Submit
@@ -105,14 +105,15 @@ const OTPModal = ({
               )}
             </AlertDialogAction>
 
-            <div className="subtitle-2 mt-2 text-center text-light-100">
+            <div className="subtitle-2 mt-2 text-center text-light-100 dark:text-white">
               Didn&apos;t get a code?
               <Button
                 type="button"
                 variant="link"
-                className="pl-1 text-brand"
+                className="pl-1 text-brand dark:text-brand"
                 onClick={handleResendOtp}
               >
+                {" "}
                 Click to resend
               </Button>
             </div>

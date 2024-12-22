@@ -71,7 +71,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="auth-form">
-          <h1 className="form-title">
+          <h1 className="form-title ">
             {type === "sign-in" ? "Sign In" : "Sign Up"}
           </h1>
           {type === "sign-up" && (
@@ -80,13 +80,13 @@ const AuthForm = ({ type }: { type: FormType }) => {
               name="fullName"
               render={({ field }) => (
                 <FormItem>
-                  <div className="shad-form-item">
+                  <div className="shad-form-item ">
                     <FormLabel className="shad-form-label">Full Name</FormLabel>
 
                     <FormControl>
                       <Input
                         placeholder="Enter your full name"
-                        className="shad-input"
+                        className="shad-input dark:text-white"
                         {...field}
                       />
                     </FormControl>
@@ -109,7 +109,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
                   <FormControl>
                     <Input
                       placeholder="Enter your email"
-                      className="shad-input"
+                      className="shad-input dark:text-white"
                       {...field}
                     />
                   </FormControl>
@@ -122,7 +122,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
 
           <Button
             type="submit"
-            className="form-submit-button"
+            className="form-submit-button dark:text-white"
             disabled={isLoading}
           >
             {type === "sign-in" ? "Sign In" : "Sign Up"}
@@ -141,7 +141,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
           {errorMessage && <p className="error-message">*{errorMessage}</p>}
 
           <div className="body-2 flex justify-center">
-            <p className="text-light-100">
+            <p className="text-light-100 dark:text-white">
               {type === "sign-in"
                 ? "Don't have an account?"
                 : "Already have an account?"}

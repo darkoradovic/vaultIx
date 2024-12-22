@@ -20,10 +20,10 @@ const Sort = () => {
 
   return (
     <Select onValueChange={handleSort} defaultValue={sortTypes[0].value}>
-      <SelectTrigger className="sort-select">
+      <SelectTrigger className="sort-select bg-white dark:bg-[#202124] dark:text-white">
         <SelectValue placeholder={sortTypes[0].value} />
       </SelectTrigger>
-      <SelectContent className="sort-select-content">
+      <SelectContent className="sort-select-content dark:bg-[#202124]">
         {sortTypes.map((sort) => (
           <SelectItem
             key={sort.label}

@@ -13,7 +13,11 @@ interface CardProps {
 
 const Card: FC<CardProps> = ({ file, email }) => {
   return (
-    <Link href={file.url} target="_blank" className="file-card">
+    <Link
+      href={file.url}
+      target="_blank"
+      className="file-card bg-white dark:bg-[#202124]"
+    >
       <div className="flex justify-between">
         <Thumbnail
           type={file.type}
@@ -25,15 +29,15 @@ const Card: FC<CardProps> = ({ file, email }) => {
 
         <div className="flex flex-col items-end justify-between">
           <ActionDropdown file={file} email={email} />
-          <p className="body-1">{convertFileSize(file.size)}</p>
+          <p className="body-1 dark:text-white">{convertFileSize(file.size)}</p>
         </div>
       </div>
 
-      <div className="file-card-details">
+      <div className="file-card-details text-light-100 dark:text-white">
         <p className="subtitle-2 line-clamp-1">{file.name}</p>
         <FormattedDateTime
           date={file.$createdAt}
-          className="body-2 text-light-100"
+          className="body-2 text-light-100 dark:text-white"
         />
         <p className="caption line-clamp-1 text-light-200">
           By:{" "}
